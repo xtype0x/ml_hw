@@ -1,0 +1,14 @@
+{
+  "name": "machine-learning-hw1",
+  "version": "0.0.1",
+  "author": "Li-Yuan Liu (NTU R04944018)",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "async": "^1.4.2",
+    "optimist": "^0.6.1",
+    "underscore": "^1.8.3"
+  }
+}
