@@ -111,11 +111,13 @@ switch(argv.problem){
 		break;
 	case 18:
 	case 19:
+	case 20:
 		errors = [];
 		flag = argv.problem==19?true:false;
+		update_times = argv.problem==20?100:50;
 		
 		for(i=0;i<2000;i++){
-			result = my_pla.pocket_alg(X,y,50,i+1,flag);
+			result = my_pla.pocket_alg(X,y,update_times,i+1,flag);
 			error = my_pla.error_rate(result.model,test_X,test_y);
 			errors.push(error);
 			bar.tick()
@@ -128,7 +130,13 @@ switch(argv.problem){
 		filename = "problem"+argv.problem.toString()+".png";
 		var data = {
 		  x: errors,
-		  type: "histogram"
+		  type: "histogram",
+		  autobinx: false,
+		  xbins: {
+		  	start: 0,
+		  	end: 1,
+		  	size: 0.02
+		  }
 		};
 		plotly.getImage({
 			data: [data]
@@ -141,8 +149,6 @@ switch(argv.problem){
     	console.log("The histogram is saved to",filename);
 		})
 		console.log("Average error rate is",avg)
-		break;
-
 		break;
 	default:
 		break;
