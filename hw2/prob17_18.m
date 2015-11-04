@@ -13,7 +13,5 @@ end
 
 mean(eins)
 mean(eouts)
-subplot(2,1,1);
 hist(eins);
-subplot(2,1,2);
 hist(eouts);

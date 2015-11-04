@@ -14,6 +14,11 @@ for i = 1:d
 	end	
 end
 
+optimal_i
+optimal_s
+optimal_theta
+min_ein
+
 test_data = tblread('./hw2_test.dat',' ');
 h_x = optimal_s*sign(test_data(:,optimal_i)-optimal_theta);
 h_x(h_x==0)=1;
