@@ -7,12 +7,13 @@ X = train_data(:,2:end);
 y = double(digits==0);
 y(y==0)=-1;
 
-xlabel = -6:2:2;
-ws = [];
-for i = xlabel
-	model = svmtrain(y,X,sprintf('-t 0 -c %f', 10^i));
+xlabels = -3:1:1;
+ds = [];
+for i = xlabels
+	model = svmtrain(y,X,sprintf('-t 2 -g 100 -c %f',10^i));
 	w = model.sv_coef' * full(model.SVs);
-	wlen = sqrt(sum(w.^2));
-	ws = [ws wlen];
+	b = -model.rho;
+	d = abs(w*full(model.SVs(1,:))'+b) / sqrt(sum(w.^2));
+	ds = [ds d];
 end
-plot(xlabel,ws)
+plot(xlabels, ds)
