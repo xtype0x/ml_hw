@@ -7,7 +7,7 @@ u1 = ones(N,1)./N;
 us = [u1];
 gs = [];
 alpha = [];
-eins = [];
+ets = [];
 for T = 1:300
   % decision stump algorithm
   u = us(:,T);
@@ -15,8 +15,8 @@ for T = 1:300
   y = train_data(:,d+1);
   g = ds_alg(X, y, u);
   pred = g.s .* sign(X(:,g.i) - g.theta);
-  eins = [eins mean(pred~=y)];
   et = sum(u .* (pred~=y)) / sum(u);
+  ets = [ets et];
   diamond = sqrt((1-et)/et);
   u(y == pred) = u(y == pred) ./ diamond;
   u(y ~= pred) = u(y ~= pred) .* diamond;
@@ -24,6 +24,15 @@ for T = 1:300
   alpha = [alpha log(diamond)];
   us = [us u];
 end
-plot(eins);
-eins(1)
-alpha(1)
+
+eouts = [];
+test_data = dlmread('../hw2_adaboost_test.dat');
+for i = 1:300
+  testX = test_data(:,1:d);
+  testy = test_data(:,d+1);
+  pred = gs(i).s .* sign(testX(:,gs(i).i) - gs(i).theta);
+  eout = mean(pred ~= testy);
+  eouts = [eouts eout];
+end
+plot(eouts)
+eouts(1)

@@ -7,7 +7,6 @@ u1 = ones(N,1)./N;
 us = [u1];
 gs = [];
 alpha = [];
-eins = [];
 for T = 1:300
   % decision stump algorithm
   u = us(:,T);
@@ -15,7 +14,6 @@ for T = 1:300
   y = train_data(:,d+1);
   g = ds_alg(X, y, u);
   pred = g.s .* sign(X(:,g.i) - g.theta);
-  eins = [eins mean(pred~=y)];
   et = sum(u .* (pred~=y)) / sum(u);
   diamond = sqrt((1-et)/et);
   u(y == pred) = u(y == pred) ./ diamond;
@@ -24,6 +22,7 @@ for T = 1:300
   alpha = [alpha log(diamond)];
   us = [us u];
 end
-plot(eins);
-eins(1)
-alpha(1)
+U = sum(us);
+plot(U);
+U(2)
+U(300)

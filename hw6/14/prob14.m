@@ -15,7 +15,6 @@ for T = 1:300
   y = train_data(:,d+1);
   g = ds_alg(X, y, u);
   pred = g.s .* sign(X(:,g.i) - g.theta);
-  eins = [eins mean(pred~=y)];
   et = sum(u .* (pred~=y)) / sum(u);
   diamond = sqrt((1-et)/et);
   u(y == pred) = u(y == pred) ./ diamond;
@@ -23,7 +22,11 @@ for T = 1:300
   gs = [gs g];
   alpha = [alpha log(diamond)];
   us = [us u];
+  G = zeros(N,1);
+  for i = 1:size(alpha,2)
+    G = G+alpha(i).* (gs(i).s .* sign(X(:,gs(i).i) - gs(i).theta));
+  end
+  eins = [eins mean(sign(G)~=y)];
 end
-plot(eins);
-eins(1)
-alpha(1)
+plot(eins)
+eins(end)
