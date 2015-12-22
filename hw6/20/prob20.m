@@ -12,19 +12,19 @@ y = train_data(:,d+1);
 testX = test_data(:,1:d);
 testy = test_data(:,d+1);
 
-minEin = 1;
+minEout = 1;
 for g = gammas
   for l = lambdas
-    model = svmtrain(y,X,sprintf('-q -s 3 -t 2 -g %f -p 0 -c %f',g,l));
-    [pl, acc, z] = svmpredict(y,X,model,'-q');
-    Ein = mean(sign(pl)~=y);
-    if Ein < minEin
+    model = svmtrain(y,X,sprintf('-q -s 3 -t 2 -g %f -p 0 ',g));
+    [pl, acc, z] = svmpredict(testy,testX,model,'-q');
+    Eout = mean(sign(pl)~=testy);
+    if Eout < minEout
       chose_g = g;
       chose_l = l;
-      minEin = Ein;
+      minEout = Eout;
     end
   end
 end 
 chose_g
 chose_l
-minEin
+minEout
